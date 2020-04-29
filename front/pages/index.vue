@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import PostCard from '~/components/PostCard.vue';
-import PostForm from '~/components/PostForm.vue';
+import PostCard from '../components/PostCard.vue';
+import PostForm from '../components/PostForm.vue';
 
 export default {
   components: {

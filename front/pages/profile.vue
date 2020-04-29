@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import FollowList from '~/components/FollowList.vue';
+import FollowList from '../components/FollowList.vue';
 export default {
   components: {
     FollowList,

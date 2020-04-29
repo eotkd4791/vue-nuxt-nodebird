@@ -85,6 +85,7 @@ export default {
         this.$store.dispatch('users/signUp', {
           email: this.email,
           nickname: this.nickname,
+          password: this.password,
         })
         .then(() => { 
           this.$router.push({ 

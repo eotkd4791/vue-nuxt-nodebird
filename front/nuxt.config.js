@@ -3,9 +3,9 @@ module.exports = {
     title: 'NodeBird'
   },
   modules: [
-
+    '@nuxtjs/axios',
   ],
-  devModules: [
+  buildModules: [
     '@nuxtjs/vuetify',
   ],
   vuetify: {

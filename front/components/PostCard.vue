@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import CommentForm from '~/components/CommentForm.vue';
+import CommentForm from './CommentForm.vue';
 export default {
   components: {
     CommentForm,
