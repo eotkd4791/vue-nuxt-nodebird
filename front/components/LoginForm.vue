@@ -40,6 +40,7 @@ export default {
       valid: false,
       email: '',
       password: '',
+      nickname: '',
       emailRules: [
         v => !!v || '이메일은 필수입니다.',
         v => /.+@.+/.test(v) || '이메일이 유효하지 않습니다.',
@@ -59,7 +60,7 @@ export default {
       if(this.$refs.form.validate()) {
         this.$store.dispatch('users/logIn', {
           email: this.email,
-          nickname: '유대상',
+          password: this.password,
         });
       }
     },
