@@ -15,7 +15,16 @@
           @input="onChangeTextarea"
         />
         <v-btn type="submit" color="green" absolute right>쨱쨱</v-btn>
-        <v-btn>이미지 업로드</v-btn>
+        <input ref="imageInput" type="file" multiple hidden @change="onChangeImages" />
+        <v-btn @click="onClickImageUpload" type="button">이미지 업로드</v-btn>
+        <div>
+          <div v-for="(p, i) in imagePaths" :key="p" style="display: inline-block">
+            <img :src="`http://localhost:3085/${p}`" alt="p" style="width: 200px" />
+            <div>
+              <button @click="onRemoveImage(i)" type="button">제거</button>
+            </div>
+          </div>
+        </div>
       </v-form>
     </v-container>
   </v-card>
@@ -28,7 +37,7 @@ export default {
   data() {
     return {
       valid: false,
-      hideDetails: false,
+      hideDetails: true,
       successMessages: '',
       success: false,
       content: '',
@@ -36,7 +45,8 @@ export default {
   },
   computed: {
     // ...mapState(['users/me']),
-    ...mapState('users', ['me'])
+    ...mapState('users', ['me']), //users에서의 me
+    ...mapState('posts', ['imagePaths']),
   },
   methods: {
     onChangeTextarea(value) {
@@ -50,13 +60,6 @@ export default {
       if(this.$refs.form.validate()) {
         this.$store.dispatch('posts/add', {
           content: this.content,
-          User: {
-            nickname: this.me.nickname,
-          },
-          Comments: [],
-          Images: [],
-          id: Date.now(),
-          createdAt: Date.now(),
         })
           .then(() => {
             this.content = '';
@@ -64,14 +67,27 @@ export default {
             this.success = true;
             this.successMessages = '게시글 등록 성공!';
           })
-          .catch(() => {
-            
+          .catch((err) => {
+            console.error(err);
           });
-          
       }
+    },
+    onClickImageUpload() { 
+      this.$refs.imageInput.click();
+    },
+    onChangeImages(e) {
+      console.log(e.target.files); //유사배열
+      const imageFormData = new FormData(); //image는 json이 아니기 때문에 formData를 사용한다. formData를 해석하기가 어렵기 때문에 multer라는 모듈을 사용한다. 
+      [].forEach.call(e.target.files, (f) => { //e.target.files가 유사배열이기 때문에 배열 메소드인 forEach를 이렇게 불러옴.
+        imageFormData.append('image', f);//키값은 image
+      });
+      this.$store.dispatch('posts/uploadImages', imageFormData);
+    },
+    onRemoveImage(index) {
+      this.$store.commit('posts/removeImagePaths', index);
     }
   }
-}
+};
 </script>
 
 <style>

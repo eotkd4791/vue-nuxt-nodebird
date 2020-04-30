@@ -66,6 +66,8 @@ export default {
     },
     onLogOut() {
       this.$store.dispatch('users/logOut');
+      this.email = '';
+      this.password= '';
     }
   }
 }

@@ -18,7 +18,8 @@ module.exports = (sequelize, DataTypes) => {
       collate: 'utf8_general_ci',//한글
   });
   User.associate = (db) => {
-    
+    db.User.hasMany(db.Post); //사용자는 게시글을여러개 가질수 있다. 똑같이 post에 써준다.
+    db.User.hasMany(db.Comment);
   };
   return User;
 };
